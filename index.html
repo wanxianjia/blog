@@ -1,5 +1,6 @@
 ---
 layout: default
+<<<<<<< HEAD
 title: 我的Blog
 ---
 <h2>{{ page.title }}</h2>
@@ -9,3 +10,16 @@ title: 我的Blog
 	<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 	{% endfor %}
 </ul>
+=======
+title: Web development
+---
+
+{% for post in site.tags.blog %}
+
+<p class="post_link">
+  <a href="{{ post.url }}">{{ post.title }}</a>
+  <small>{{ post.date | date_to_string }}</small>
+</p>
+<hr />
+{% endfor %}
+>>>>>>> cadbc81d9c6f12215a9b0f4c2ae872d9e0f41f85
