@@ -1,4 +1,4 @@
 baseurl:    /blog
-permalink:   /blog
+permalink:   /:categories/:title.html
 exclude:  [ Gemfile, Gemfile.lock, Procfile, vendor]
 markdown: maruku
