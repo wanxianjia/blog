@@ -1,4 +1,4 @@
-baseurl:		/blog
+baseurl:		/
 permalink:   	none
 markdown:		maruku
 future: 		true
