@@ -2,11 +2,11 @@
 layout: default
 title: Web development
 ---
-{{site.author}}
+
 {% for post in site.posts %}
 
 <p class="post_link">
-  <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+  <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}{{site.author}}</a>
   <small>{{ post.date | date_to_string }}</small>
 </p>
 <hr />
