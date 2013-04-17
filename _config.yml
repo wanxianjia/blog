@@ -1,5 +1,4 @@
-permalink:   none
+baseurl:    /blog
+permalink:   date
 markdown: maruku
 future: true
-url: http://wanxianjia.github.com
-source: .
