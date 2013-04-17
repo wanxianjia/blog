@@ -1,3 +1,5 @@
-baseurl:    /blog
 permalink:   none
 markdown: maruku
+future: true
+url: http://wanxianjia.github.com
+source: .
