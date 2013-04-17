@@ -90,13 +90,13 @@ dropBox.bind('drop', function(e){
         var layer, arr = [], htmlArr = [];
         
         for (var i = 0, _ref = psd.layerMask.layers, l = _ref.length; i < l; i++) {
-            layer = _ref[i];console.log(layer.isHidden());
+            layer = _ref[i];
 			if(layer.isHidden()) continue;
 			
             if (typeof layer.name === "undefined") {
                 layer.name = "Layer " + i;
             }
-			console.log(layer);
+			
             /*psdInfo.Layers[layer.name] = {
                 "Position & Size": {
                     Top: layer.top,
