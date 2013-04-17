@@ -1,4 +1,4 @@
 baseurl:    /blog
-permalink:   date
+permalink:   /blog/:title
 markdown: maruku
 future: true
