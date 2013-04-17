@@ -1,5 +1,5 @@
-baseurl:		/
-permalink:   	none
-markdown:		maruku
-future: 		true
-author:			Javin
+baseurl: /blog
+permalink: none
+markdown: maruku
+future: true
+author: Javin
