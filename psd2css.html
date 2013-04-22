@@ -5,6 +5,8 @@
 <title>PSD2CSS</title>
 <style>
 ul,li{list-style:none;}
+h1 sup{font-size:14px; vertical-align:13px; padding-left:5px;}
+h1 sup a{color:#ff7300; }
 h2{color:#555;}
 #drop-box{ font-size:24px; border:1px dashed #ccc; background:rgba(222,222,222,0.3); height:200px; line-height:200px; text-align:center;}
 #css-box{border:1px dashed #ccc; margin-top:8px; padding:8px; outline:0 none;}
@@ -12,123 +14,22 @@ h2{color:#555;}
 #image-output{ margin-top:8px;}
 #pre-box{margin-top:8px; border:1px dashed #ccc; overflow:hidden; padding:8px;}
 #pre-box li{float:left; margin-left:8px;}
-#image-output{border:1px dashed #ccc;padding:8px;}}
+#image-output{border:1px dashed #ccc;padding:8px;}
 </style>
 </head>
 <body>
-<h1>PSD TO CSS</h1>
+<h1>PSD TO CSS<sup><a href="./about.html">V0.6<a/></sup></h1>
 <div id="drop-box">
     Drag psd here
 </div>
 <h2>CSS</h2>
-<div id="css-box" contentEditable="true">Output：.psdlayername{width:**px;height:**px;background-position:-**px -**px;}</div>
+<div id="css-box" contentEditable="true">Output：psdlayername{width:**px;height:**px;background-position:-**px -**px;}</div>
 <h2>Preview</h2>
 <ul id="pre-box"></ul>
 <h2>PNG</h2>
 <div id="image-output"></div>
-<script src="./js/jquery-1.7.2.min.js"></script>
+<script src="http://style.china.alibaba.com/js/lib/fdev-v4/core/fdev-min.js"></script>
 <script src="./js/psd.js"></script>
-<script>
-;(function($){
-
-var dropBox = $('#drop-box'), cssBox = $('#css-box'), preBox = $('#pre-box');
-
-
-dropBox.bind('dragover', function(e){
-    e = e.originalEvent;
-    e.dataTransfer.dropEffect = "copy";
-    return false;
-});
-
-dropBox.bind('drop', function(e){
-    e = e.originalEvent;
-    var file = e.dataTransfer.files ? e.dataTransfer.files[0] : null;
-    //判断是否PSD文件
-	//console.log(file);
-    if(!file) return false;
-	if(file.name.slice(-4).toLowerCase() !== '.psd'){
-	//windows 下file.type为空，因此改成判断文件后缀
-    //if(file.type !== "image/vnd.adobe.photoshop" && file.type !== "application/x-photoshop") {
-        
-        cssBox.html("不是PSD文件");
-
-        return false;
-    }
-    cssBox.html('<progress value="80" max="100"></proress>');
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-
-    reader.onload = function (f) {
-        
-        var bytes = new Uint8Array(f.target.result);
-        // For demo purposes, we parse the image data only first
-        var psd = new PSD(bytes);
-		var src = psd.toImage();
-        var image = $("<img />").attr('src', src);
-        $("#image-output").html(image);
-
-        // Start over and parse the whole file.
-        psd = new PSD(bytes);
-
-        try {
-            psd.parse();
-        } catch (e) {
-            cssBox.html("ERROR");
-        }
-      
-        var psdInfo = {
-            "Header Info": {
-                Channels: psd.header.channels,
-                Width: psd.header.cols,
-                Height: psd.header.rows,
-                Depth: psd.header.depth,
-                Mode: psd.header.modename
-            },
-			"Layers": {}
-        };
-
-        var layer, arr = [], htmlArr = [];
-        
-        for (var i = 0, _ref = psd.layerMask.layers, l = _ref.length; i < l; i++) {
-            layer = _ref[i];
-			if(layer.isHidden()) continue;
-			
-            if (typeof layer.name === "undefined") {
-                layer.name = "Layer " + i;
-            }
-			
-            /*psdInfo.Layers[layer.name] = {
-                "Position & Size": {
-                    Top: layer.top,
-                    Left: layer.left,
-                    Width: layer.cols,
-                    Height: layer.rows
-                },
-                "Blending Mode": {
-                    Type: layer.blendMode.blender,
-                    Opacity: Math.floor(layer.blendMode.opacity)
-                }
-            };*/
-			var width = layer.cols,
-				height = layer.rows,
-				left = layer.left,
-				top = layer.top;
-				
-			var str = 'width:'+width+'px;height:'+height+'px;background-position:-'+left+'px -'+top+'px;';
-			
-			htmlArr.push('<li style="',str,'"></li>');
-            arr.push(layer.name + '{' + str + '}' + '\n');
-        }
-		preBox.html(htmlArr.join(''));
-		$('li', preBox).css({'background-image':'url('+src+')'});
-        cssBox.html('<pre>'+arr.join('')+'</pre>');
-    };
-    
-    return false;
-});
-
-
-})(jQuery);
-</script>
+<script src="./js/psd2css.js"></script>
 </body>
 </html>
