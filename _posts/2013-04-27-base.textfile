@@ -1,0 +1,45 @@
+---
+layout: default
+title: Photoshop插件开发基础篇
+---
+# {{ page.title }}  
+
+Photoshop插件开发的语言还比较多，有基于SDK开发的。  
+
+我这里分享的主要是通过脚本(Javascript)开发Photoshop插件。  
+
+通过*PSD2HTML*的开发，发现Photoshop插件开发这块目前还比较冷门，特别是在国内很少能搜到相关的文档。
+
+###开发环境
+IDE：ExtendScript Toolkit，在安装adobe产品的时候会默认在adobe目录下安装了这么个工具，它带PS api的自动提示、断点调试、Data browser(各个阶段的变量浏览)，虽然这个IDE有很多吐槽的地方，但为我们开发插件提供了很大的方便。
+![Foo](img/toolkit.jpg)
+
+###POM
+POM是什么？当我们基于浏览器开发页面的时候有个BOM，是的，正如你现在想的POM即Photoshop Object Model。
+POM如图：
+![Foo](img/pom.jpg)
+Application就相当于BOM中的Window，它在脚本的变量对应的是app。
+
+###Hello, world
+有上面的两点，我们对PS插件开发应该有了点眉目，就让我们开始hello,world。  
+首先，我们来段操作图层（隐藏图层）的，图层是PSD构成的最基本的元素。 
+1.新建两个图层  
+![Foo](img/layers.jpg) 
+2.代码
+>var activeDoc = app.activeDocument; //获取当前PSD文档  
+var layers = activeDoc.layers;	//获取当前文档下的所有图层  
+
+for(var i = 0, len = layers.length; i < len; i++){  
+	layers[i].visible = false;  // 隐藏图层
+}  
+alert('hello, world');
+3.把代码贴到toolkit里
+![Foo](img/layers.jpg) 
+_注：如上图，下拉菜单要选中你启动的PS，菜单前的链接显示绿色，表示跟PS连接成功_
+然后按F5或点击toolkit里的运行按钮，然后当我们看到hello,world的时候再回到我们的PS看看，图层都被隐藏了。
+
+###文档
+1.[photoshop_cs5_scripting_guide.pdf](http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/photoshop/pdfs/photoshop_cs5_scripting_guide.pdf) Photoshop Scripting Basics
+2.[Photoshop CS5 JavaScript Reference](http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/photoshop/pdfs/photoshop_cs5_javascript_ref.pdf) Photoshop API文档
+3.[javascript tools guide](http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/products/indesign/pdfs/JavaScriptToolsGuide_CS5.pdf) 主要是开发工具(包括ExtendScript toolkit)等介绍
+<p>{{ page.date | date_to_string }}</p>
